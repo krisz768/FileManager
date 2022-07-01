@@ -3,13 +3,17 @@ table {
     white-space: nowrap;
 }
 
+.ListContainer {
+    height: 91%;
+}
+
+/* Fix gomb áthelyezés után*/
 section {
     margin-left: 10px;
     margin-right: 10px;
-    overflow-y: auto;
-    overflow-x: auto;
+    overflow: auto;
     box-shadow: none;
-    height: 91%;
+    height: 100%;
 }
 
 .mat-column-name, .mat-column-type, .mat-column-modified, .mat-column-size, .mat-column-actions, .mat-column-logo, .mat-column-select {
