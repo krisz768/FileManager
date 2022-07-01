@@ -1,0 +1,44 @@
+table {
+    width: 100%;
+    white-space: nowrap;
+}
+
+section {
+    margin-left: 10px;
+    margin-right: 10px;
+    overflow-y: auto;
+    overflow-x: auto;
+    box-shadow: none;
+    height: 91%;
+}
+
+.mat-column-name, .mat-column-type, .mat-column-modified, .mat-column-size, .mat-column-actions, .mat-column-logo, .mat-column-select {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.mat-column-logo, .mat-column-select {
+    width: 10px;
+}
+
+.SearchContainer {
+    text-align: right;
+}
+
+mat-form-field {
+    margin-right: 20px;
+}
+
+.mat-row:hover .mat-cell {
+    background-color: rgba(167, 167, 167, 0.432);
+}
+
+.mat-row .mat-cell {
+    cursor: pointer;
+}
+
+@media (max-width: 1000px) {
+    section {
+        height: 88%;
+    }
+}

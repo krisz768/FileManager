@@ -1,6 +1,6 @@
 .loadingBigText {
     color: rgb(255, 255, 255);
-    font-size: 50px;
+    font-size: 40px;
     font-weight: 700;
 }
 
@@ -11,6 +11,21 @@
     align-items: center;
 }
 
-mat-spinner {
+.FullScreen {
+    height: calc(100vh - 64px);
+}
+
+.LoadingDisplay mat-spinner {
     margin-left: 130px;
+}
+
+@media (max-width: 500px) {
+    .LoadingDisplay {
+        flex-direction: column;
+    }
+
+    .LoadingDisplay mat-spinner {
+        margin-left: 0;
+        margin-top: 80px;
+    }
 }

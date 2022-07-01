@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading-screen',
@@ -9,7 +9,10 @@ export class LoadingScreenComponent implements OnInit {
 
   constructor() { }
 
+  @Input() FullScreen : boolean = true;
+
   ngOnInit(): void {
+    
   }
 
 }

@@ -1,0 +1,29 @@
+.container mat-grid-list {
+    height: calc(100vh - 165px);
+}
+
+.container mat-card {
+    width: 80%;
+    height: calc(100vh - 160px);
+    margin: 30px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.SideTree app-file-manager-tree-view,
+.ListView app-file-manager-list-view
+{
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 1000px) {
+    .container mat-card {
+        width: 95%;
+        padding: 0;
+    }
+}

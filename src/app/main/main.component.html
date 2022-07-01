@@ -1,4 +1,15 @@
 <mat-toolbar>
-    <span>krisz768.hu - Fájl kezelő</span>
+    <span>krisz768.hu - Fájlkezelő</span>
+    <span class="toolbar-spacer"></span>
+    <span *ngIf="State == 1" class="UsenameDesktop">{{Username}}</span>
+    <button mat-icon-button class="example-icon" aria-label="Menü" *ngIf="State == 1" [matMenuTriggerFor]="menu">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+        <button mat-menu-item><mat-icon>settings</mat-icon><span>Beállítások</span></button>
+        <button mat-menu-item (click)="LogOut()"><mat-icon>logout</mat-icon><span>Kijelentkezés</span></button>
+    </mat-menu>
 </mat-toolbar>
-<app-loading-screen></app-loading-screen>
+<app-loading-screen *ngIf="State == -1"></app-loading-screen>
+<app-login-form *ngIf="State == 0" (OnLoggedIn)="OnLoggedIn($event)"></app-login-form>
+<app-file-manager *ngIf="State == 1" [StartingData]="DirBaseData"></app-file-manager>

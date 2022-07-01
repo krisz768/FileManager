@@ -1,0 +1,23 @@
+<div class="LoginForm">
+    <h2>Krisz768.hu - Fájlkezelő</h2>
+    <mat-card>
+        <p>Bejelentkezés:</p>
+        <form #loginForm="ngForm" (ngSubmit)="LoginClick(loginForm)">
+            <mat-form-field appearance="outline">
+                <mat-label>Felhasználónév</mat-label>
+                <input matInput placeholder="valaki" name="Username" [disabled]="DisableForm" ngModel required>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Jelszó</mat-label>
+                <input matInput placeholder="*********" type="password" name="Password" [disabled]="DisableForm" ngModel required>
+            </mat-form-field>
+            <button mat-raised-button color="primary" [disabled]="DisableForm">{{LoginButtonText}}</button>
+            <div [hidden]="!DisableForm">
+                <mat-progress-bar mode="indeterminate" ></mat-progress-bar>
+            </div>
+            
+        </form>
+        
+    </mat-card>
+</div>
+

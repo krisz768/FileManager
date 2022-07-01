@@ -1,0 +1,13 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+mat-toolbar button {
+    margin-left: 15px;
+}
+
+@media (max-width: 550px) {
+    mat-toolbar .UsenameDesktop {
+        visibility: hidden;
+    }
+}

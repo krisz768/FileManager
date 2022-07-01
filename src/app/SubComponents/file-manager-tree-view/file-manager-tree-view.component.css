@@ -1,0 +1,43 @@
+.dir-tree-invisible {
+    display: none;
+}
+
+.dir-tree ul,
+.dir-tree li {
+    margin-top: 0;
+    margin-bottom: 0;
+    list-style-type: none;
+}
+
+.dir-tree .mat-nested-tree-node div[role=group] {
+    padding-left: 20px;
+}
+
+.dir-tree div[role=group] > .mat-tree-node {
+    padding-left: 40px;
+}
+
+mat-tree-node {
+    padding-left: 40px;
+}
+
+.TreeCard {
+    background-color: rgb(56, 56, 56);
+    height: 99%;
+    overflow-x: auto;
+    padding: 0;
+}
+
+.dir-tree {
+    background-color: rgba(0, 0, 0, 0);
+}
+
+.NodeName {
+    padding-right: 15px;
+    padding-left: 10px;
+    margin: 0;
+}
+
+.TreeCard mat-icon {
+    overflow: unset;
+}

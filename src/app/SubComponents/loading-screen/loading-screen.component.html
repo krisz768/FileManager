@@ -1,4 +1,4 @@
-<div class="LoadingDisplay">
-    <p class="mat-h1 loadingBigText">Loading...</p>
+<div class="LoadingDisplay" [ngClass]="{'FullScreen': FullScreen}">
+    <p class="mat-h1 loadingBigText">Betöltés...</p>
     <mat-spinner></mat-spinner>
 </div>
