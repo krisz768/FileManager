@@ -12,7 +12,7 @@ export class ApiConnectionService {
 
   constructor(private http: HttpClient) { }
 
-  private BaseUrl : string = "http://192.168.0.100/";
+  private BaseUrl : string = "";
 
   IsLoggedIn() : Observable<ResponseModel> {
     return this.http.post<ResponseModel>(this.BaseUrl + "api/FileManager/IsLoggedIn", "");

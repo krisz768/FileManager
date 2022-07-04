@@ -36,6 +36,7 @@ mat-tree-node {
     padding-right: 15px;
     padding-left: 10px;
     margin: 0;
+    cursor: pointer;
 }
 
 .TreeCard mat-icon {

@@ -25,13 +25,6 @@ section {
     width: 10px;
 }
 
-.SearchContainer {
-    text-align: right;
-}
-
-mat-form-field {
-    margin-right: 20px;
-}
 
 .mat-row:hover .mat-cell {
     background-color: rgba(167, 167, 167, 0.432);

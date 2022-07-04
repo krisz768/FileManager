@@ -1,4 +1,4 @@
-import { Component, OnInit, Input} from '@angular/core';
+import { Component, OnInit, Input ,Output ,EventEmitter} from '@angular/core';
 import { DirNode } from "../../DirDataModel";
 import {SelectionModel} from '@angular/cdk/collections';
 import {Sort} from '@angular/material/sort';
@@ -33,10 +33,16 @@ export class FileManagerListViewComponent implements OnInit {
 
   rawData : DirNode[] = this.StartingData;
 
+  @Output() OnPathChange = new EventEmitter<string>();
+
 
   ngOnInit(): void {
     this.dataSource = new MatTableDataSource(this.StartingData);
     this.rawData = this.StartingData;
+
+    this.dataSource.filterPredicate = function (record,filter) {
+      return record.name.toLocaleLowerCase().includes(filter.toLocaleLowerCase());
+    }
   }
 
   displayedColumns = ['select','logo', 'name', 'type', 'modified', 'size', 'actions'];
@@ -73,7 +79,7 @@ export class FileManagerListViewComponent implements OnInit {
   sortData(sort: Sort) {
     const data = this.dataSource.data.slice();
     if (sort.direction == "") {
-      this.dataSource = new MatTableDataSource(this.rawData);
+      this.dataSource.data = this.rawData;
     } else {
       this.dataSource.data = data.sort((a, b) => {
         const isAsc = sort.direction === 'asc';
@@ -118,16 +124,10 @@ export class FileManagerListViewComponent implements OnInit {
     return Res;
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
+  applyFilter(Filter: string) {
+    this.dataSource.filter = Filter.trim().toLowerCase();
   }
 
-  //path change
   TableClick(row : DirNode) {
     if (!row.isFile) {
       this.PrevPeth.push(this.Path);
@@ -136,12 +136,20 @@ export class FileManagerListViewComponent implements OnInit {
     }
   }
 
-  //path change
+  ChangePathTo(Data : {Path : string, IsFile : boolean}) {
+    if (!Data.IsFile) {
+      this.PrevPeth.push(this.Path);
+      this.Path = Data.Path;
+      this.ReloadTable();
+    }
+  }
+
   ReloadTable() {
     let Done = false;
+    history.pushState(null, '', window.location.href);
     this.apiConnectionService.GetDirList(this.Path).subscribe((data) => {
       if (!data.error) {
-        this.dataSource = new MatTableDataSource(data.data);
+        this.dataSource.data = data.data;
         this.rawData = data.data;
         this.IsLoading = false;
         Done = true;
@@ -151,7 +159,9 @@ export class FileManagerListViewComponent implements OnInit {
           this.Path = "/";
           this.ReloadTable();
         }
-      }},(error) => {
+      }
+      this.OnPathChange.emit(this.Path);
+    },(error) => {
         this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás");
       });
 

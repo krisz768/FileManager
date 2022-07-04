@@ -1,1 +1,20 @@
-<p>file-manager-url-view works!</p>
+<div class="UrlContainer">
+    <div class="UrlList">
+        <span *ngIf="folders.length == 0" class="">/</span>
+        <span (click)="ChangePath(-1)" *ngIf="folders.length != 0" class="active">/</span>
+
+        <span class="FolderContainer" *ngFor="let folder of folders; let last = last; let index = index;">
+            <span (click)="ChangePath(index)" *ngIf="!last" class="folder active">{{folder}}</span>
+            <span *ngIf="!last" class="">/</span>
+            <span *ngIf="last" class="folder">{{folder}}</span>
+        </span>
+        
+
+    </div>
+    <div class="SearchContainer">
+        <mat-form-field appearance="outline" style=" margin-bottom: -20px">
+            <mat-label>Kereső</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+        </mat-form-field>
+      </div>
+</div>

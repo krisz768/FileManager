@@ -1,4 +1,4 @@
-import { Component, OnInit,Input } from '@angular/core';
+import { Component, OnInit,Input, Output, EventEmitter } from '@angular/core';
 import {SelectionChange} from '@angular/cdk/collections';
 import {NestedTreeControl} from '@angular/cdk/tree';
 import {MatTreeNestedDataSource} from '@angular/material/tree';
@@ -16,6 +16,8 @@ export class FileManagerTreeViewComponent implements OnInit {
   constructor(private apiConnectionService: ApiConnectionService,  private _MatSnackBar : MatSnackBar) { }
 
   @Input() StartingData : DirNode[] = [];
+
+  @Output() OnNewPath = new EventEmitter<{Path : string, IsFile : boolean}>();
 
   DirTree: DirNode[] = [];
 
@@ -51,6 +53,12 @@ export class FileManagerTreeViewComponent implements OnInit {
       }, (error) => {this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás"); Node.isLoading = false;}
       );
     }
+  }
+
+  OnNodeClick(Node : DirNode) {
+    let path = [Node.path, "/", Node.name].join('');
+
+    this.OnNewPath.emit({Path: path, IsFile: Node.isFile});
   }
 
   treeControl = new NestedTreeControl<DirNode>(node => node.children);

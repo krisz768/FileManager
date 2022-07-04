@@ -15,7 +15,8 @@
 }
 
 .SideTree app-file-manager-tree-view,
-.ListView app-file-manager-list-view
+.ListView app-file-manager-list-view,
+.UrlBar app-file-manager-url-view
 {
     width: 100%;
     height: 100%;

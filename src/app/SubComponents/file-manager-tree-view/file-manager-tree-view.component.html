@@ -3,7 +3,7 @@
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
             <mat-icon *ngIf="node.isFile">insert_drive_file</mat-icon> 
             <mat-icon *ngIf="!node.isFile">folder</mat-icon> 
-            <p class="NodeName">{{node.name}}</p>
+            <p class="NodeName" (click)="OnNodeClick(node)">{{node.name}}</p>
         </mat-tree-node>
         <mat-nested-tree-node *matTreeNodeDef="let node; when: isDirectory">
             <div class="mat-tree-node">
@@ -14,7 +14,7 @@
                 </mat-icon>
               </button>
               <mat-icon>folder</mat-icon> 
-              <p class="NodeName">{{node.name}}</p>
+              <p class="NodeName" (click)="OnNodeClick(node)">{{node.name}}</p>
               <mat-spinner [diameter]="25" *ngIf="node.isLoading"></mat-spinner>
             </div>
             <div [class.dir-tree-invisible]="!treeControl.isExpanded(node)"

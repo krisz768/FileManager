@@ -1,0 +1,31 @@
+.UrlContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+mat-form-field {
+    margin-right: 20px;
+}
+
+.UrlList {
+    margin-left: 20px;
+}
+
+.folder {
+    margin-left: 15px;
+    margin-right: 15px;
+    
+}
+
+.active {
+    color: #c2185b;
+    cursor: pointer;
+    
+}
+
+.UrlList {
+    font-size: 140%;
+}
