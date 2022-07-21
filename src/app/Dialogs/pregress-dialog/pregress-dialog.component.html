@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{Title}}</h1>
+<div mat-dialog-content>
+    <p *ngIf="PercentDisplay === undefined">{{Inprogress}}/{{Max}}</p>
+    <p *ngIf="PercentDisplay !== undefined">{{PercentDisplay}}%</p>
+    <mat-progress-bar mode="indeterminate" *ngIf="Prep"></mat-progress-bar>
+    <mat-progress-bar mode="determinate" value={{Percent}} *ngIf="!Prep"></mat-progress-bar>
+</div>
+

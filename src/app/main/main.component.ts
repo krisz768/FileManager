@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {ApiConnectionService} from '../Services/api-connection.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { DirNode } from "../DirDataModel";
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-main',
@@ -11,7 +12,7 @@ import { DirNode } from "../DirDataModel";
 })
 export class MainComponent implements OnInit {
 
-  constructor(private apiConnectionService: ApiConnectionService, private _MatSnackBar : MatSnackBar) { }
+  constructor(private apiConnectionService: ApiConnectionService, private _MatSnackBar : MatSnackBar,private dialog: MatDialog) { }
 
   State : number = -1;  //-1: loading screen, 0: Not Logged in, 1 Logged in
   Username : string = "";
@@ -20,29 +21,57 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.IsLoggedIn();
+
+    this.apiConnectionService.OnNewLogin.subscribe(Username => {this.OnNewLogin(Username)})
   }
 
-  IsLoggedIn() : void {
-    this.apiConnectionService.IsLoggedIn().subscribe((data) => {this.State = data.data? -1:0; if (data.data) {this.GetUsername()}}, (error) => {this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás");});
-    
+  async IsLoggedIn() {
+    const IsLogedIn = await this.apiConnectionService.IsLoggedIn();
+    this.State = IsLogedIn.data ? -1:0; 
+    if (IsLogedIn.data) {
+      this.GetUsername();
+    }
   }
 
-  GetUsername () {
-    this.apiConnectionService.GetUsername().subscribe((data) => {if (!data.error) {this.Username = data.data}},(error) => {this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás");});
-    this.LoadDirBaseData();
+  async GetUsername () {
+    const UsernameData = await this.apiConnectionService.GetUsername();
+    if (!UsernameData.error) {
+      this.Username = UsernameData.data;
+      this.LoadDirBaseData();
+    }
   }
 
   OnLoggedIn(Username : string) : void {
-    this.Username = Username
+    this.Username = Username;
     this.State = -1;
     this.LoadDirBaseData();
   }
 
-  LogOut() {
-    this.apiConnectionService.LogOut().subscribe((data) => {this.State = 0; this.Username = "";});
+  OnNewLogin(Username : string) {
+    if (this.Username != Username) {
+      this.Username = Username;
+      this.dialog.closeAll();
+      this.State = -1;
+      this.LoadDirBaseData();
+    }
   }
 
-  LoadDirBaseData() {
-    this.apiConnectionService.GetDirList("/").subscribe((data) => {if (!data.error) {this.State = 1; this.DirBaseData = data.data;} else {this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(data.data), "Bezárás")}},(error) => {this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás");});
+  async LogOut() {
+    this.State = -1;
+    const LogData = await this.apiConnectionService.LogOut();
+    if (!LogData.error) {
+      this.State = 0; 
+      this.Username = "";
+    }
+  }
+
+  async LoadDirBaseData() {
+    const DirData = await this.apiConnectionService.GetDirList("/");
+    if (!DirData.error) {
+      this.State = 1; 
+      this.DirBaseData = DirData.data;
+    } else {
+      this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(DirData.data), "Bezárás");
+    }
   }
 }

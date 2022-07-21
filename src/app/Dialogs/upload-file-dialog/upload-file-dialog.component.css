@@ -1,0 +1,27 @@
+.dropzone {
+    border: 1px solid #858585;
+    border-radius: 16px;
+    padding-left: 200px;
+    padding-right: 200px;
+    padding-top: 120px;
+    padding-bottom: 120px;
+    cursor: pointer;
+}
+
+.mat-dialog-actions {
+    float: right;
+}
+
+@media (max-width: 1000px) {
+    .dropzone {
+        padding-left:unset;
+        padding-right: unset;
+        text-align: center;
+        padding-top: 60px;
+        padding-bottom: 60px;
+    }
+
+    .mat-dialog-content {
+        width: calc(80vw - 50px);
+    }
+}

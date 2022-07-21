@@ -1,11 +1,12 @@
 .container mat-grid-list {
-    height: calc(100vh - 165px);
+    height: 100%;
 }
 
 .container mat-card {
     width: 80%;
     height: calc(100vh - 160px);
     margin: 30px;
+    min-height: 560px;
 }
 
 .container {
@@ -16,7 +17,8 @@
 
 .SideTree app-file-manager-tree-view,
 .ListView app-file-manager-list-view,
-.UrlBar app-file-manager-url-view
+.UrlBar app-file-manager-url-view,
+.FileView app-file-manager-file-view
 {
     width: 100%;
     height: 100%;
@@ -26,5 +28,7 @@
     .container mat-card {
         width: 95%;
         padding: 0;
+        margin-top: 5px;
+        margin-bottom: 5px;
     }
 }

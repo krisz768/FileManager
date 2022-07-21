@@ -3,7 +3,7 @@
     height: 100%;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items:baseline;
 }
 
 mat-form-field {
@@ -11,13 +11,13 @@ mat-form-field {
 }
 
 .UrlList {
-    margin-left: 20px;
+    margin-left: 10px;
 }
 
 .folder {
     margin-left: 15px;
     margin-right: 15px;
-    
+    white-space: nowrap;
 }
 
 .active {
@@ -28,4 +28,23 @@ mat-form-field {
 
 .UrlList {
     font-size: 140%;
+    overflow-x: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 1000px) {
+    .UrlContainer{
+        display: block;
+    }
+
+    .UrlList {
+        height: 35%;
+    }
+
+    mat-form-field {
+        margin-left: 20px;
+        width: calc(100% - 40px);
+    }
 }

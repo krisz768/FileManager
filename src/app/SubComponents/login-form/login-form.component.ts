@@ -23,7 +23,7 @@ export class LoginFormComponent implements OnInit {
 
   }
 
-  LoginClick(formData: NgForm) : void {
+  async LoginClick(formData: NgForm) {
     for (const Input in formData.form.controls) {
       if (formData.form.controls[Input].value == "") {
         this.ShowSnackBar("A mező nem lehet üres!");
@@ -32,7 +32,8 @@ export class LoginFormComponent implements OnInit {
     }
     this.DisableForm = true;
     this.LoginButtonText = "Bejelentkezés...";
-    this.apiConnectionService.Login(formData.form.controls["Username"].value, formData.form.controls["Password"].value).subscribe((data) => {this.LoginCallback(data)},(error) => {this._MatSnackBar.open("Hiba történt a szerver elérése közben.", "Bezárás");});
+    const Resp = await this.apiConnectionService.Login(formData.form.controls["Username"].value, formData.form.controls["Password"].value);
+    this.LoginCallback(Resp);
   }
 
   LoginCallback(data : ResponseModel) {
@@ -41,7 +42,7 @@ export class LoginFormComponent implements OnInit {
       this.ShowSnackBar(ErrorText);
 
       this.DisableForm = false;
-    this.LoginButtonText = "Bejelentkezés";
+      this.LoginButtonText = "Bejelentkezés";
     }else {
       this.OnLoggedIn.emit(data.data);
     }

@@ -11,9 +11,12 @@ import { FileManagerComponent } from './SubComponents/file-manager/file-manager.
 import { FileManagerTreeViewComponent } from './SubComponents/file-manager-tree-view/file-manager-tree-view.component';
 import { FileManagerListViewComponent } from './SubComponents/file-manager-list-view/file-manager-list-view.component';
 import { FileManagerUrlViewComponent } from './SubComponents/file-manager-url-view/file-manager-url-view.component';
+import { CopyMoveDialogComponent } from './Dialogs/copy-move-dialog/copy-move-dialog.component';
 
 import { HttpClientModule } from '@angular/common/http';
 import {ApiConnectionService} from './Services/api-connection.service';
+
+import {SAVER, getSaver} from './Services/saver.provider';
 
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -33,6 +36,16 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatTableModule} from '@angular/material/table';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatSortModule} from '@angular/material/sort';
+import {MatDialogModule} from '@angular/material/dialog';
+import { LoginDialogComponent } from './Dialogs/login-dialog/login-dialog.component';
+import { PregressDialogComponent } from './Dialogs/pregress-dialog/pregress-dialog.component';
+import { ConfirmDialogComponent } from './Dialogs/confirm-dialog/confirm-dialog.component';
+import { NameSelectComponent } from './Dialogs/name-select/name-select.component';
+import { UploadFileDialogComponent } from './Dialogs/upload-file-dialog/upload-file-dialog.component';
+import { UploadFileDirectiveDirective } from './Directives/upload-file-directive.directive';
+import { FileManagerFileViewComponent } from './SubComponents/file-manager-file-view/file-manager-file-view.component';
+
+
 
 @NgModule({
   declarations: [
@@ -44,6 +57,14 @@ import {MatSortModule} from '@angular/material/sort';
     FileManagerTreeViewComponent,
     FileManagerListViewComponent,
     FileManagerUrlViewComponent,
+    CopyMoveDialogComponent,
+    LoginDialogComponent,
+    PregressDialogComponent,
+    ConfirmDialogComponent,
+    NameSelectComponent,
+    UploadFileDialogComponent,
+    UploadFileDirectiveDirective,
+    FileManagerFileViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,9 +87,10 @@ import {MatSortModule} from '@angular/material/sort';
     MatDividerModule,
     MatTableModule,
     MatCheckboxModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
-  providers: [ApiConnectionService,MatSnackBar],
+  providers: [ApiConnectionService,MatSnackBar, {provide: SAVER, useFactory: getSaver}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

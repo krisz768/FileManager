@@ -1,0 +1,10 @@
+.mat-dialog-content {
+    width: 400px;
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+    .mat-dialog-content {
+        width: calc(80vw - 50px);
+    }
+}

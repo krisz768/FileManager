@@ -24,8 +24,7 @@ mat-tree-node {
 .TreeCard {
     background-color: rgb(56, 56, 56);
     height: 99%;
-    overflow-x: auto;
-    padding: 0;
+    padding: 10px;
 }
 
 .dir-tree {
@@ -37,8 +36,14 @@ mat-tree-node {
     padding-left: 10px;
     margin: 0;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .TreeCard mat-icon {
     overflow: unset;
+}
+
+.spacer {
+    overflow: auto;
+    height: calc(100% - 13px);
 }

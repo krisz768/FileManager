@@ -38,17 +38,17 @@
              </td>
       </ng-container>
   
-      <ng-container matColumnDef="type">
+      <ng-container matColumnDef="type" *ngIf="!MobileView">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Típus </th>
         <td mat-cell *matCellDef="let element"> {{IsFileToString(element)}} </td>
       </ng-container>
   
-      <ng-container matColumnDef="modified">
+      <ng-container matColumnDef="modified" *ngIf="!MobileView">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Módosítva </th>
         <td mat-cell *matCellDef="let element"> {{LastModToString(element)}} </td>
       </ng-container>
   
-      <ng-container matColumnDef="size">
+      <ng-container matColumnDef="size" *ngIf="!MobileView">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Méret </th>
         <td mat-cell *matCellDef="let element"> {{element.size}} </td>
       </ng-container>
@@ -58,10 +58,27 @@
         <td mat-cell *matCellDef="let element"> </td>
       </ng-container>
   
-      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="TableClick(row)"></tr>
+      <div *ngIf="!MobileView">
+        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="TableClick(row)"></tr>
+      </div>
+      <div *ngIf="MobileView">
+        <tr mat-header-row *matHeaderRowDef="displayedColumnsMobile; sticky: true"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumnsMobile;" (click)="TableClick(row)"></tr>
+      </div>
+      
     </table>
   </section>
+
+  <div class="ButtonContainer">
+    <button mat-raised-button color="primary" (click)="OnCopyButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Másolás</span> <mat-icon>file_copy</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="OnMoveButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Kivágás</span>	<mat-icon>content_cut</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="OnDeleteButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Törlés</span><mat-icon>delete</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="OnUploadButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Feltöltés</span><mat-icon>upload</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="OnZipButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Letöltés (zip)</span><mat-icon>folder_zip</mat-icon></button>
+    <button mat-raised-button color="primary" (click)="OnNewFolderButtonPressed()"><span class="DetailText" *ngIf="!MobileView">Új mappa</span><mat-icon>create_new_folder</mat-icon></button>
+  </div>
+  
 </div>
 
 <app-loading-screen *ngIf="IsLoading" [FullScreen]="false"></app-loading-screen>

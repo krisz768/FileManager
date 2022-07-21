@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>{{data.Title}}:</h1>
+<div mat-dialog-content>
+    <mat-form-field appearance="fill">
+        <mat-label>{{data.InputName}}</mat-label>
+        <input matInput placeholder="" value="" [(ngModel)]="Name" (keyup.enter)="onEnter()">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Bezár</button>
+    <button mat-raised-button [mat-dialog-close]="Name" color="primary">{{data.ActionName}}</button>
+</div>

@@ -3,14 +3,16 @@
     <mat-card>
         <mat-grid-list cols="10" rows="10" rowHeight="fit" *ngIf="!MobileView">
             <mat-grid-tile class="SideTree" [colspan]="2" [rowspan]="10">
-                <app-file-manager-tree-view [StartingData]="StartingData" (OnNewPath)="ListView.ChangePathTo($event)"></app-file-manager-tree-view>
+                <app-file-manager-tree-view [StartingData]="StartingData" [(Path)]="ActualPath" [(PrevPeth)]="PrevPeth" #TreeView></app-file-manager-tree-view>
             </mat-grid-tile>
-            <mat-grid-tile class="UrlBar" [colspan]="8" [rowspan]="1"><app-file-manager-url-view (OnNewSearch)="ListView.applyFilter($event)" (OnNewPath)="ListView.ChangePathTo($event)" #UrlView></app-file-manager-url-view></mat-grid-tile>
-            <mat-grid-tile class="ListView"[colspan]="8" [rowspan]="9"><app-file-manager-list-view [StartingData]="StartingData" (OnPathChange)="UrlView.OnPathChange($event)" #ListView></app-file-manager-list-view></mat-grid-tile>
+            <mat-grid-tile class="UrlBar" [colspan]="8" [rowspan]="1"><app-file-manager-url-view (OnNewSearch)="ListView.applyFilter($event)" [(Path)]="ActualPath" [(PrevPeth)]="PrevPeth"></app-file-manager-url-view></mat-grid-tile>
+            <mat-grid-tile class="ListView"[colspan]="8" [rowspan]="9" *ngIf="!ActualPath.IsFile"><app-file-manager-list-view [StartingData]="StartingData" [(Path)]="ActualPath" [(PrevPeth)]="PrevPeth" [BackButtonPress]="BackButtonPress.asObservable()" [MobileView]="MobileView" (ReloadData)="TreeView.ReloadData($event);SetNewStartData($event);"></app-file-manager-list-view></mat-grid-tile>
+            <mat-grid-tile class="FileView"[colspan]="8" [rowspan]="9" *ngIf="ActualPath.IsFile"><app-file-manager-file-view ></app-file-manager-file-view></mat-grid-tile>
         </mat-grid-list>
         <mat-grid-list cols="10" rows="10" rowHeight="fit" *ngIf="MobileView">
-            <mat-grid-tile class="UrlBar" [colspan]="10" [rowspan]="1"><app-file-manager-url-view (OnNewSearch)="ListView.applyFilter($event)" (OnNewPath)="ListView.ChangePathTo($event)" #UrlView></app-file-manager-url-view></mat-grid-tile>
-            <mat-grid-tile class="ListView"[colspan]="10" [rowspan]="9"><app-file-manager-list-view [StartingData]="StartingData" (OnPathChange)="UrlView.OnPathChange($event)" #ListView></app-file-manager-list-view></mat-grid-tile>
+            <mat-grid-tile class="UrlBar" [colspan]="10" [rowspan]="2"><app-file-manager-url-view (OnNewSearch)="ListView.applyFilter($event)" [(Path)]="ActualPath" [(PrevPeth)]="PrevPeth"></app-file-manager-url-view></mat-grid-tile>
+            <mat-grid-tile class="ListView"[colspan]="10" [rowspan]="8" *ngIf="!ActualPath.IsFile"><app-file-manager-list-view [StartingData]="StartingData" [(Path)]="ActualPath" [(PrevPeth)]="PrevPeth" [BackButtonPress]="BackButtonPress.asObservable()" [MobileView]="MobileView" (ReloadData)="SetNewStartData($event);"></app-file-manager-list-view></mat-grid-tile>
+            <mat-grid-tile class="FileView"[colspan]="10" [rowspan]="8" *ngIf="ActualPath.IsFile"><app-file-manager-file-view ></app-file-manager-file-view></mat-grid-tile>
         </mat-grid-list>
     </mat-card>
 </div>

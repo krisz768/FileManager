@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{data.Title}}:</h1>
+<div mat-dialog-content>
+    <div class="TreeContainer">
+        <app-file-manager-tree-view [StartingData]="this.data.StartingData" [(Path)]="Path"></app-file-manager-tree-view>
+    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>{{data.Title}} ide:</mat-label>
+        <input matInput placeholder="" value="/" [(ngModel)]="Path.Path">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Bezár</button>
+    <button mat-raised-button [mat-dialog-close]="Path.Path" color="primary">{{data.ActionName}}</button>
+</div>

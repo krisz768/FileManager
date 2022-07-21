@@ -1,20 +1,20 @@
 <div class="UrlContainer">
     <div class="UrlList">
-        <span *ngIf="folders.length == 0" class="">/</span>
-        <span (click)="ChangePath(-1)" *ngIf="folders.length != 0" class="active">/</span>
+        <span *ngIf="folders.length == 0" class="folder">/</span>
+        <span (click)="ChangePath(-1)" *ngIf="folders.length != 0" class="active folder">/</span>
 
         <span class="FolderContainer" *ngFor="let folder of folders; let last = last; let index = index;">
+            <span class="">&#62;</span>
             <span (click)="ChangePath(index)" *ngIf="!last" class="folder active">{{folder}}</span>
-            <span *ngIf="!last" class="">/</span>
             <span *ngIf="last" class="folder">{{folder}}</span>
         </span>
         
 
     </div>
-    <div class="SearchContainer">
+    <div class="SearchContainer" *ngIf="!Path.IsFile">
         <mat-form-field appearance="outline" style=" margin-bottom: -20px">
             <mat-label>Kereső</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="" #input>
+            <input matInput (keyup)="applyFilter($event)" placeholder="" #FilterInput>
         </mat-form-field>
       </div>
 </div>

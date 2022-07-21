@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Fájl feltöltése:</h1>
+<div mat-dialog-content>
+    <div *ngIf="!files.length" class="dropzone" appUploadFileDirective (files)="filesDropped($event)" (click)="ShowDialog()">
+        <div class="text-wrapper">
+            <div class="centered">
+                <h2>Fájl feltöltése</h2>
+                <p>
+                    Kattints vagy húzd ide a fájlt
+                </p>
+                <input type="file" style="display:none" (change)="FileSelected($event)" multiple>
+            </div>
+        </div>
+    </div>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Bezár</button>
+</div>

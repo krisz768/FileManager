@@ -4,16 +4,16 @@ table {
 }
 
 .ListContainer {
-    height: 91%;
+    height: 100%;
 }
 
-/* Fix gomb áthelyezés után*/
 section {
     margin-left: 10px;
     margin-right: 10px;
+    margin-bottom: 10px;
     overflow: auto;
     box-shadow: none;
-    height: 100%;
+    height: calc(100% - 54px);
 }
 
 .mat-column-name, .mat-column-type, .mat-column-modified, .mat-column-size, .mat-column-actions, .mat-column-logo, .mat-column-select {
@@ -34,8 +34,26 @@ section {
     cursor: pointer;
 }
 
+.ListContainer button {
+    margin-right: 15px;
+}
+
+button .DetailText {
+    padding-right: 10px;
+}
+
+.ButtonContainer {
+    display: flex;
+    justify-content: end;
+}
+
 @media (max-width: 1000px) {
-    section {
-        height: 88%;
+    .ListContainer button {
+        min-width: 0;
+        margin-right: 0;
+    }
+
+    .ButtonContainer {
+        justify-content: space-around;
     }
 }
