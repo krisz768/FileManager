@@ -1,1 +1,12 @@
-<p>file-manager-file-view works!</p>
+<app-loading-screen *ngIf="IsLoading" [FullScreen]="false"></app-loading-screen>
+
+<div class="FileViewer" *ngIf="!IsLoading">
+    <img [src]="GetFileUrl()" [alt]="Path.Path" *ngIf="(FileType=='image/png')||(FileType=='image/jpeg')||(FileType=='image/svg+xml')||(FileType=='image/webp')||(FileType=='image/gif')||(FileType=='image/vnd.microsoft.icon')||(FileType=='image/bmp')">
+
+    <video controls autoplay *ngIf="(FileType=='video/x-msvideo')||(FileType=='video/mp4')||(FileType=='video/mpeg')||(FileType=='video/ogg')||(FileType=='video/mp2t')||(FileType=='video/webm')||(FileType=='video/3gpp')||(FileType=='video/3gpp2')"><source [src]="GetFileUrl()" [type]="FileType">Sorry, your browser doesn't support embedded videos.</video>
+    
+    <audio controls autoplay *ngIf="(FileType=='audio/aac')||(FileType=='audio/mpeg')||(FileType=='audio/ogg')||(FileType=='audio/opus')||(FileType=='audio/wav')||(FileType=='audio/webm')||(FileType=='audio/3gpp')||(FileType=='audio/3gpp2')"><source [src]="GetFileUrl()" [type]="FileType">Your browser does not support the audio element.</audio>
+
+    <iframe [src]="'https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fkrisz768.hu%2F' + GetFileUrl()" frameborder="no" style="width:100%;min-height:460px"></iframe>
+</div>
+

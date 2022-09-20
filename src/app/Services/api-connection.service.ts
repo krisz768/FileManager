@@ -19,7 +19,7 @@ export class ApiConnectionService {
 
   constructor(private http: HttpClient,private _MatSnackBar : MatSnackBar, private dialog: MatDialog,@Inject(SAVER) private save: Saver) { }
 
-  private BaseUrl : string = "";
+  BaseUrl : string = "";
   private Username : string = "";
 
   OnNewLogin = new BehaviorSubject<string>("");
@@ -209,6 +209,22 @@ export class ApiConnectionService {
     }).pipe(download(blob => this.save(blob, dateString)),catchError(val => {return ErrorCallback(val)}));
   }
 
+  async GetFileType(Path : string) : Promise<ResponseModel> {
+    const params = new HttpParams()
+    .append('FilePath', Path);
+    const RespObservable = this.http.post<ResponseModel>(this.BaseUrl + "api/FileManager/GetFileType", "",{params: params}).pipe(take(1),catchError(val => this.OnError(val)));
+    const Data : ResponseModel = await lastValueFrom(RespObservable);
+    if (Data.error && Data.data == "<NotLoggedIn>") {
+      const Login = await this.ShowLoginScreen();
+      if (Login) {
+        return this.GetFileType(Path);
+      } else {
+        return {error : true, data : "<UserMismatch>"};
+      }
+    }
+    return Data;
+  }
+
   
 
 
@@ -257,7 +273,8 @@ export class ApiConnectionService {
        "<FolderDeleteError>": "Hiba történt a mappa törlésekor.",
        "<FolderDeleteSucessful>": "Mappa sikeresen törölve.",
        "<UploadError>": "Hiba történt a feltöltés során.",
-       "<UploadSucessful>": "A feltöltés sikeresen befejeződött."
+       "<UploadSucessful>": "A feltöltés sikeresen befejeződött.",
+       "<FileError>": "Szerver hiba: A fájl elérése sikertelen.", 
       };
    
     return List[ErrorCode];
