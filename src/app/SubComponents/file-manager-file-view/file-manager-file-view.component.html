@@ -7,6 +7,8 @@
     
     <audio controls autoplay *ngIf="(FileType=='audio/aac')||(FileType=='audio/mpeg')||(FileType=='audio/ogg')||(FileType=='audio/opus')||(FileType=='audio/wav')||(FileType=='audio/webm')||(FileType=='audio/3gpp')||(FileType=='audio/3gpp2')"><source [src]="GetFileUrl()" [type]="FileType">Your browser does not support the audio element.</audio>
 
-    <iframe [src]="'https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fkrisz768.hu%2F' + GetFileUrl()" frameborder="no" style="width:100%;min-height:460px"></iframe>
+    <iframe [src]="'https://view.officeapps.live.com/op/embed.aspx?src=https%3A%2F%2Fkrisz768.hu%2F' + GetFileUrl() | safe" frameborder="no" style="width:100%;min-height:460px" *ngIf="(FileType=='application/msword')||(FileType=='application/vnd.openxmlformats-officedocument.wordprocessingml.document')||(FileType=='application/vnd.ms-powerpoint')||(FileType=='application/vnd.openxmlformats-officedocument.presentationml.presentation')||(FileType=='application/vnd.ms-excel')||(FileType=='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')"></iframe>
+
+    <!--<embed [src]="'' + GetFileUrl() | safe" width="300" height="200" type="text/plain">-->
 </div>
 

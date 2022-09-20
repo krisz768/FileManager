@@ -44,6 +44,7 @@ import { NameSelectComponent } from './Dialogs/name-select/name-select.component
 import { UploadFileDialogComponent } from './Dialogs/upload-file-dialog/upload-file-dialog.component';
 import { UploadFileDirectiveDirective } from './Directives/upload-file-directive.directive';
 import { FileManagerFileViewComponent } from './SubComponents/file-manager-file-view/file-manager-file-view.component';
+import { SafePipe } from './safe.pipe';
 
 
 
@@ -65,6 +66,7 @@ import { FileManagerFileViewComponent } from './SubComponents/file-manager-file-
     UploadFileDialogComponent,
     UploadFileDirectiveDirective,
     FileManagerFileViewComponent,
+    SafePipe,
   ],
   imports: [
     BrowserModule,

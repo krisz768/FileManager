@@ -30,8 +30,6 @@ export class FileManagerFileViewComponent implements OnInit {
     this.IsLoading = true;
     const FileData = await this.apiConnectionService.GetFileType(this.Path.Path);
 
-    console.log(FileData);
-    
     if (FileData.error) {
       this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(FileData.data), "Bezárás",{
         duration: 10000
