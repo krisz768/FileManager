@@ -612,4 +612,41 @@ export class FileManagerListViewComponent implements OnInit, OnDestroy,OnChanges
 
     return Files;
   }
+
+  OnRenameButtonClick(evt : any, Element : DirNode) {
+    evt.stopPropagation();
+
+    history.pushState(null, '', window.location.href);
+    const dialogRef = this.dialog.open(NameSelectComponent, {data: {Title: "Átnevezés", ActionName: "Mentés",InputName: "Név", DefaultString: Element.name}, closeOnNavigation: false});
+    this.OpenedDialog = dialogRef;
+    dialogRef.afterClosed().subscribe(async result => {
+      this.OpenedDialog = undefined;
+      if(result != undefined) {
+        const PregressDialogRef = this.dialog.open(PregressDialogComponent, {closeOnNavigation: false, disableClose: true});
+        this.disableBackButton = true;
+        PregressDialogRef.componentInstance.Max = "1";
+        PregressDialogRef.componentInstance.Prep = false;
+
+
+        const RespData = await this.apiConnectionService.Rename(this.Path.Path, Element.name, result);
+        if (RespData.error) {
+          this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(RespData.data), "Bezárás",{
+            duration: 10000
+          });
+        } else {
+          this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(RespData.data), "Bezárás",{
+            duration: 2000
+          });
+        }
+        PregressDialogRef.close();
+        this.disableBackButton = false;
+      }
+
+      this.ReloadDataEmitter();
+    });
+  }
+
+  OnShareButtonClick(evt : any, Element : DirNode) {
+    evt.stopPropagation();
+  }
 }

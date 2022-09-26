@@ -8,12 +8,14 @@ import { MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 })
 export class NameSelectComponent implements OnInit {
 
-  constructor(public matDialogRef: MatDialogRef<NameSelectComponent>,@Inject(MAT_DIALOG_DATA) public data: {Title: string, ActionName: string, InputName: string}) { }
+  constructor(public matDialogRef: MatDialogRef<NameSelectComponent>,@Inject(MAT_DIALOG_DATA) public data: {Title: string, ActionName: string, InputName: string, DefaultString: string}) { 
+
+  }
 
   Name : string = "";
 
   ngOnInit(): void {
-    
+    this.Name = this.data.DefaultString;
   }
 
   onNoClick() {

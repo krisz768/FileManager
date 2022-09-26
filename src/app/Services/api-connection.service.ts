@@ -225,6 +225,24 @@ export class ApiConnectionService {
     return Data;
   }
 
+  async Rename(Path : string, OldName : string, NewName : string) : Promise<ResponseModel> {
+    const params = new HttpParams()
+    .append('Path', Path)
+    .append('OldName', OldName)
+    .append('NewName', NewName);
+    const RespObservable = this.http.post<ResponseModel>(this.BaseUrl + "api/FileManager/RenameFileOrFolder", "",{params: params}).pipe(take(1),catchError(val => this.OnError(val)));
+    const Data : ResponseModel = await lastValueFrom(RespObservable);
+    if (Data.error && Data.data == "<NotLoggedIn>") {
+      const Login = await this.ShowLoginScreen();
+      if (Login) {
+        return this.GetFileType(Path);
+      } else {
+        return {error : true, data : "<UserMismatch>"};
+      }
+    }
+    return Data;
+  }
+
   
 
 
@@ -275,6 +293,8 @@ export class ApiConnectionService {
        "<UploadError>": "Hiba történt a feltöltés során.",
        "<UploadSucessful>": "A feltöltés sikeresen befejeződött.",
        "<FileError>": "Szerver hiba: A fájl elérése sikertelen.", 
+       "<RenameSucessfull>": "Az átnevezés sikeresen megtörtént.", 
+       "<RenameError>": "Hiba történt az átnevezés közben."
       };
    
     return List[ErrorCode];
