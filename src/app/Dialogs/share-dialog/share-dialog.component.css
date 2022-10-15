@@ -1,0 +1,21 @@
+.mat-dialog-actions {
+    float: right;
+}
+
+.mat-dialog-content {
+    width: 500px;
+}
+
+.mat-dialog-content mat-form-field {
+    width: 100%;
+}
+
+button .DetailText {
+    padding-right: 10px;
+}
+
+@media (max-width: 1000px) {
+    .mat-dialog-content {
+        width: calc(80vw - 50px);
+    }
+}

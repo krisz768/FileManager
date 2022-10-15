@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Megosztás</h1>
+<div mat-dialog-content>
+    <app-loading-screen *ngIf="IsLoading" [FullScreen]="false"></app-loading-screen>
+
+    <mat-form-field appearance="fill" *ngIf="!IsLoading">
+        <mat-label>Link</mat-label>
+        <input matInput placeholder="" value="" [ngModel]="Link" [readonly]="true">
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Bezár</button>
+    <button mat-raised-button color="primary" (click)="OnCopyClick()" [cdkCopyToClipboard]="Link"><span class="DetailText">Másolás</span><mat-icon>content_copy</mat-icon></button>
+</div>

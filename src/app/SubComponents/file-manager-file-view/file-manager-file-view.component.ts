@@ -12,6 +12,8 @@ export class FileManagerFileViewComponent implements OnInit {
   FileType: String = "application/octet-stream";
   IsLoading : boolean = true;
 
+  TextFileContent : string = "";
+
   @Input() Path : {Path : string, IsFile : boolean} = {Path : "/", IsFile : false};
 
   constructor(private apiConnectionService: ApiConnectionService,  private _MatSnackBar : MatSnackBar) { }
@@ -36,6 +38,21 @@ export class FileManagerFileViewComponent implements OnInit {
       });
     } else {
       this.FileType = FileData.data;
+      if(FileData.data == "text/plain" || FileData.data == "application/json" || FileData.data == "application/xml" || FileData.data == "text/css" || FileData.data == "text/html" || FileData.data == "text/javascript") {
+        const TextContent = await this.apiConnectionService.GetTextFileContent(this.Path.Path);
+
+        if (TextContent.error) {
+          this._MatSnackBar.open(this.apiConnectionService.ErrorCodesToString(FileData.data), "Bezárás",{
+            duration: 10000
+          });
+
+          FileData.data = "application/octet-stream";
+        } else {
+          this.TextFileContent = TextContent.data;
+        }
+
+        
+      }
       this.IsLoading = false;
     }
   }

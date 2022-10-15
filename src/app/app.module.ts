@@ -45,6 +45,9 @@ import { UploadFileDialogComponent } from './Dialogs/upload-file-dialog/upload-f
 import { UploadFileDirectiveDirective } from './Directives/upload-file-directive.directive';
 import { FileManagerFileViewComponent } from './SubComponents/file-manager-file-view/file-manager-file-view.component';
 import { SafePipe } from './safe.pipe';
+import {ClipboardModule} from '@angular/cdk/clipboard';
+
+import { ShareDialogComponent } from './Dialogs/share-dialog/share-dialog.component';
 
 
 
@@ -67,6 +70,7 @@ import { SafePipe } from './safe.pipe';
     UploadFileDirectiveDirective,
     FileManagerFileViewComponent,
     SafePipe,
+    ShareDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -90,7 +94,8 @@ import { SafePipe } from './safe.pipe';
     MatTableModule,
     MatCheckboxModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    ClipboardModule
   ],
   providers: [ApiConnectionService,MatSnackBar, {provide: SAVER, useFactory: getSaver}],
   bootstrap: [AppComponent]

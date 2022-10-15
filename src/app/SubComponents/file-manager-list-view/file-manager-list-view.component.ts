@@ -14,6 +14,7 @@ import { PregressDialogComponent } from 'src/app/Dialogs/pregress-dialog/pregres
 import { ConfirmDialogComponent } from 'src/app/Dialogs/confirm-dialog/confirm-dialog.component';
 import { NameSelectComponent } from 'src/app/Dialogs/name-select/name-select.component';
 import { UploadFileDialogComponent } from 'src/app/Dialogs/upload-file-dialog/upload-file-dialog.component';
+import { ShareDialogComponent } from 'src/app/Dialogs/share-dialog/share-dialog.component';
 
 @Component({
   selector: 'app-file-manager-list-view',
@@ -648,5 +649,12 @@ export class FileManagerListViewComponent implements OnInit, OnDestroy,OnChanges
 
   OnShareButtonClick(evt : any, Element : DirNode) {
     evt.stopPropagation();
+
+    history.pushState(null, '', window.location.href);
+    const dialogRef = this.dialog.open(ShareDialogComponent, {data: {RelPath: this.Path.Path + Element.name}, closeOnNavigation: false});
+    this.OpenedDialog = dialogRef;
+    dialogRef.afterClosed().subscribe(async result => {
+      this.OpenedDialog = undefined;
+    });
   }
 }

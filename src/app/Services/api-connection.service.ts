@@ -20,6 +20,7 @@ export class ApiConnectionService {
   constructor(private http: HttpClient,private _MatSnackBar : MatSnackBar, private dialog: MatDialog,@Inject(SAVER) private save: Saver) { }
 
   BaseUrl : string = "";
+  ShareLink : string = "https://krisz768.hu/share?l=";
   private Username : string = "";
 
   OnNewLogin = new BehaviorSubject<string>("");
@@ -235,7 +236,39 @@ export class ApiConnectionService {
     if (Data.error && Data.data == "<NotLoggedIn>") {
       const Login = await this.ShowLoginScreen();
       if (Login) {
-        return this.GetFileType(Path);
+        return this.Rename(Path, OldName, NewName);
+      } else {
+        return {error : true, data : "<UserMismatch>"};
+      }
+    }
+    return Data;
+  }
+
+  async CreateShareLink(RelPath : string) : Promise<ResponseModel> {
+    const params = new HttpParams()
+    .append('SharePath', RelPath);
+    const RespObservable = this.http.post<ResponseModel>(this.BaseUrl + "api/FileManager/CreateShare", "",{params: params}).pipe(take(1),catchError(val => this.OnError(val)));
+    const Data : ResponseModel = await lastValueFrom(RespObservable);
+    if (Data.error && Data.data == "<NotLoggedIn>") {
+      const Login = await this.ShowLoginScreen();
+      if (Login) {
+        return this.CreateShareLink(RelPath);
+      } else {
+        return {error : true, data : "<UserMismatch>"};
+      }
+    }
+    return Data;
+  }
+
+  async GetTextFileContent(RelPath : string) : Promise<ResponseModel> {
+    const params = new HttpParams()
+    .append('FilePath', RelPath);
+    const RespObservable = this.http.post<ResponseModel>(this.BaseUrl + "api/FileManager/GetTextFile", "",{params: params}).pipe(take(1),catchError(val => this.OnError(val)));
+    const Data : ResponseModel = await lastValueFrom(RespObservable);
+    if (Data.error && Data.data == "<NotLoggedIn>") {
+      const Login = await this.ShowLoginScreen();
+      if (Login) {
+        return this.GetTextFileContent(RelPath);
       } else {
         return {error : true, data : "<UserMismatch>"};
       }
@@ -294,7 +327,13 @@ export class ApiConnectionService {
        "<UploadSucessful>": "A feltöltés sikeresen befejeződött.",
        "<FileError>": "Szerver hiba: A fájl elérése sikertelen.", 
        "<RenameSucessfull>": "Az átnevezés sikeresen megtörtént.", 
-       "<RenameError>": "Hiba történt az átnevezés közben."
+       "<RenameError>": "Hiba történt az átnevezés közben.",
+       "<ShareError>": "A fájlt vagy mappát nem lehetett megosztani.",
+       "<FileSizeError>": "A fájlt nem lehet megnyitni, mert túl nagy.",
+       "<ChangePasswordFail>": "A jelszót egy hiba miatt nem lehet megváltoztatni.",
+       "<ChangePasswordSuccess>": "A jelszó sikeresen megváltoztatva.",
+       "<ChangePasswordNotMatch>": "A régi jelszó nem egyezik meg a jelenlegi jelszóval.",
+       "<ShareLoadError>": "A megosztott fájlt/mappát egy hiba miatt nem lehetett betölteni.",
       };
    
     return List[ErrorCode];

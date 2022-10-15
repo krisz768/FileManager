@@ -1,6 +1,7 @@
 import { Component, Input, OnInit,} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatInput } from '@angular/material/input';
+import {ApiConnectionService} from '../../Services/api-connection.service';
 
 @Component({
   selector: 'app-upload-file-dialog',
